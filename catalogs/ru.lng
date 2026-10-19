@@ -1,0 +1,39 @@
+# Русский каталог nvlocale.
+# Формат: id[=]текст, подстановки {0} {1} ...
+# Для чисел с локализованным разделителем используйте tn().
+
+menu.start[=]Начать
+menu.continue[=]Продолжить
+menu.settings[=]Настройки
+menu.quit[=]Выход
+menu.back[=]Назад
+
+ui.press_key[=]Нажми любую клавишу.
+ui.volume[=]Громкость: {0}
+
+game.welcome[=]Добро пожаловать в {0}.
+msg.picked_up[=]{0} подбирает «{1}».
+msg.landed[=]{0} поймал(а) редчайшего «{1}» весом {2} кг!
+item.golden_carp[=]золотой карп
+item.whistle[=]свисток
+item.apple[=]яблоко
+
+bag.items.one[=]В сумке {0} предмет.
+bag.items.few[=]В сумке {0} предмета.
+bag.items.many[=]В сумке {0} предметов.
+bag.items.other[=]В сумке {0} предмета.
+bag.items.empty[=]Сумка пуста.
+msg.tiles_away.one[=]прямо впереди, {0} клетка
+msg.tiles_away.few[=]прямо впереди, {0} клетки
+msg.tiles_away.many[=]прямо впереди, {0} клеток
+msg.tiles_away.other[=]прямо впереди, {0} клетки
+msg.seconds_ago.one[=]{0} секунду назад
+msg.seconds_ago.few[=]{0} секунды назад
+msg.seconds_ago.many[=]{0} секунд назад
+msg.seconds_ago.other[=]{0} секунды назад
+talents.points.one[=]В разделе «{1}» ждёт {0} очко таланта
+talents.points.few[=]В разделе «{1}» ждут {0} очка талантов
+talents.points.many[=]В разделе «{1}» ждёт {0} очков талантов
+talents.points.other[=]В разделе «{1}» ждёт {0} очка талантов
+
+error.missing_catalog[=]Файл языка {0} не найден, используется английский.

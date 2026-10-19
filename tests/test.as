@@ -1,0 +1,116 @@
+/*
+    nvlocale tests — run with the NVGT engine:
+
+        nvgt tests/test.as
+
+    NVGT has no console output in script mode, so the report is written to
+    tests/last_run.log. The process exit code is not used; the log ends with
+    "RESULT: PASS" or "RESULT: FAIL".
+*/
+
+#include "../nvlocale.as"
+
+int passed = 0;
+int failed = 0;
+string report;
+
+void check(const string &in name, const string &in got, const string &in want) {
+	if (got == want) {
+		passed++;
+		return;
+	}
+	failed++;
+	report += "FAIL " + name + "\n";
+	report += "  got:  [" + got + "]\n";
+	report += "  want: [" + want + "]\n";
+}
+
+void check_bool(const string &in name, bool got, bool want) {
+	check(name, got ? "true" : "false", want ? "true" : "false");
+}
+
+void main() {
+	string dir = "catalogs";
+	string log = "tests/last_run.log";
+	string fixtures = "tests/fixtures";
+	if (!file_exists(dir + "/en.lng")) {
+		dir = "../catalogs";
+		log = "last_run.log";
+		fixtures = "fixtures";
+	}
+
+	// --- init and base language -------------------------------------------
+	check_bool("init loads ru", loc::init(dir, "ru"), true);
+	check("language", loc::language(), "ru");
+	check("plain id", loc::t("menu.start"), "Начать");
+	check("one argument", loc::t("ui.volume", "7"), "Громкость: 7");
+	check("two arguments",
+		loc::t("msg.picked_up", "Мила", "свисток"),
+		"Мила подбирает «свисток».");
+
+	// --- plural selection -------------------------------------------------
+	check("ru 1 -> one", loc::tn("bag.items", 1), "В сумке 1 предмет.");
+	check("ru 21 -> one", loc::tn("bag.items", 21), "В сумке 21 предмет.");
+	check("ru 2 -> few", loc::tn("bag.items", 2), "В сумке 2 предмета.");
+	check("ru 22 -> few", loc::tn("bag.items", 22), "В сумке 22 предмета.");
+	check("ru 0 -> many", loc::tn("bag.items", 0), "В сумке 0 предметов.");
+	check("ru 5 -> many", loc::tn("bag.items", 5), "В сумке 5 предметов.");
+	check("ru 11 -> many", loc::tn("bag.items", 11), "В сумке 11 предметов.");
+	check("ru 1.5 -> other", loc::tn("bag.items", 1.5), "В сумке 1,5 предмета.");
+	check("ru seconds 8",
+		loc::tn("msg.seconds_ago", 8), "8 секунд назад");
+	check("ru tiles 1",
+		loc::tn("msg.tiles_away", 1), "прямо впереди, 1 клетка");
+	check("extra plural argument",
+		loc::tn("talents.points", 28, "Village life, More to do, Talents"),
+		"В разделе «Village life, More to do, Talents» ждёт 28 очков талантов");
+
+	check("category ru 3", loc::plural_category(3, "ru"), "few");
+	check("category ru 111", loc::plural_category(111, "ru"), "many");
+	check("category fr 1.5", loc::plural_category(1.5, "fr"), "one");
+	check("category en 1", loc::plural_category(1, "en"), "one");
+	check("category ja 1", loc::plural_category(1, "ja"), "other");
+
+	// --- numbers ----------------------------------------------------------
+	check("num integer", loc::num(7), "7");
+	check("num fraction", loc::num(7.5), "7,5");
+	check("num trailing zeros", loc::num(7.25), "7,25");
+
+	// --- fallback to the base catalog -------------------------------------
+	check_bool("load fixture", loc::load_file("xx", fixtures + "/escape.lng"), true);
+	check("base fallback", loc::t("menu.start"), "Start");
+
+	// --- escaping and placeholders ---------------------------------------
+	check("placeholder", loc::t("t.arg", "X"), "xXy");
+	check("literal braces", loc::t("t.braces", "X"), "literal {0} stays");
+	check("newline escape", loc::t("t.newline"), "a\nb");
+	check("tab escape", loc::t("t.tab"), "a\tb");
+	check("backslash escape", loc::t("t.backslash"), "a\\b");
+	check("unknown escape", loc::t("t.unknown"), "a\\qb");
+	check("stray brace", loc::t("t.stray"), "50% { candy");
+
+	// --- missing ids ------------------------------------------------------
+	loc::clear_missing();
+	check("missing id returns id", loc::t("no.such.id"), "no.such.id");
+	check("missing count", string(loc::missing_count()), "1");
+	loc::t("no.such.id");
+	check("missing is deduplicated", string(loc::missing_count()), "1");
+	loc::clear_missing();
+	check("clear missing", string(loc::missing_count()), "0");
+
+	// --- parse errors -----------------------------------------------------
+	loc::clear_parse_errors();
+	loc::load_file("xx", fixtures + "/broken.lng");
+	check("parse error count", string(loc::parse_error_count()), "3");
+
+	// --- back to Russian --------------------------------------------------
+	check_bool("back to ru", loc::set_language("ru"), true);
+	check("ru after reset", loc::t("menu.quit"), "Выход");
+	check_bool("english base", loc::set_language("en"), true);
+	check("en after reset", loc::t("menu.quit"), "Quit");
+
+	report = "passed: " + string(passed)
+		+ ", failed: " + string(failed) + "\n" + report;
+	report += (failed == 0) ? "RESULT: PASS\n" : "RESULT: FAIL\n";
+	file_put_contents(log, report);
+}

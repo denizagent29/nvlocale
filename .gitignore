@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+*.tar.gz
+tests/last_run.log
+examples/output.txt

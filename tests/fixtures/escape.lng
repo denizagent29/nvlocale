@@ -1,0 +1,8 @@
+# Fixtures for the escaping and fallback tests.
+t.arg[=]x{0}y
+t.braces[=]literal {{0}} stays
+t.newline[=]a\nb
+t.tab[=]a\tb
+t.backslash[=]a\\b
+t.unknown[=]a\qb
+t.stray[=]50% { candy

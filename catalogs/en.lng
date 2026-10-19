@@ -1,0 +1,31 @@
+# English base catalog for nvlocale.
+# Any ID missing in another language falls back to this file.
+# Format: id[=]text, placeholders {0} {1} ...
+
+menu.start[=]Start
+menu.continue[=]Continue
+menu.settings[=]Settings
+menu.quit[=]Quit
+menu.back[=]Back
+
+ui.press_key[=]Press a key.
+ui.volume[=]Volume: {0}
+
+game.welcome[=]Welcome to {0}.
+msg.picked_up[=]{0} picks up "{1}".
+msg.landed[=]{0} landed a very rare "{1}" of {2} kilograms!
+item.golden_carp[=]golden carp
+item.whistle[=]whistle
+item.apple[=]apple
+
+bag.items.one[=]Your bag has {0} item.
+bag.items.other[=]Your bag has {0} items.
+bag.items.empty[=]Your bag is empty.
+msg.tiles_away.one[=]{0} tile away
+msg.tiles_away.other[=]{0} tiles away
+msg.seconds_ago.one[=]{0} second ago
+msg.seconds_ago.other[=]{0} seconds ago
+talents.points.one[=]{0} talent point waiting in {1}
+talents.points.other[=]{0} talent points waiting in {1}
+
+error.missing_catalog[=]Language file {0} was not found, using English.
