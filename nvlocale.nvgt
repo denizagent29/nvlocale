@@ -25,7 +25,7 @@
   second file can patch a base catalog.
 
   Usage:
-    #include "nvlocale.as"
+    #include "nvlocale.nvgt"
     using loc;
     void main() {
       init("catalogs", "ru");            // dir, language ("" = auto)

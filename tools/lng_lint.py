@@ -106,7 +106,7 @@ def split_plural(key: str) -> tuple[str, str | None]:
 def placeholders(text: str) -> tuple[set[int], list[str]]:
     """Indices used as {N}; also returns structural problems.
 
-    Mirrors nvlocale.as: {{ and }} are literal braces, everything else that
+    Mirrors nvlocale.nvgt: {{ and }} are literal braces, everything else that
     looks like {digits} is a placeholder, a stray brace is just text.
     """
     used: set[int] = set()

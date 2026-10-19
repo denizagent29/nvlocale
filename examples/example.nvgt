@@ -3,14 +3,14 @@
 
     Run from the repository root:
 
-        nvgt examples/example.as
+        nvgt examples/example.nvgt
 
     NVGT has no console output in script mode, so the result is written to
     examples/output.txt. In a real game replace `say()` with
     screen_reader_speak() or whatever speech function you use.
 */
 
-#include "../nvlocale.as"
+#include "../nvlocale.nvgt"
 
 string log_text;
 string dir = "../catalogs";  // NVGT runs the script with its own folder as CWD

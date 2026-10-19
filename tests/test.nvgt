@@ -1,14 +1,14 @@
 /*
     nvlocale tests — run with the NVGT engine:
 
-        nvgt tests/test.as
+        nvgt tests/test.nvgt
 
     NVGT has no console output in script mode, so the report is written to
     tests/last_run.log. The process exit code is not used; the log ends with
     "RESULT: PASS" or "RESULT: FAIL".
 */
 
-#include "../nvlocale.as"
+#include "../nvlocale.nvgt"
 
 int passed = 0;
 int failed = 0;

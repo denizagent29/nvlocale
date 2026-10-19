@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Reference implementation of the CLDR plural rules used by nvlocale.as.
+"""Reference implementation of the CLDR plural rules used by nvlocale.nvgt.
 
 This file is the source of truth for tests and for the linter: the
-AngelScript table in nvlocale.as must agree with it. Keep the two in sync
+AngelScript table in nvlocale.nvgt must agree with it. Keep the two in sync
 when a rule changes.
 """
 
